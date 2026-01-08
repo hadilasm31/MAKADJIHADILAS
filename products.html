@@ -143,7 +143,7 @@
             font-weight: 600;
         }
         
-        /* Menu Hamburger Icon - CORRIGÉ */
+        /* Menu Hamburger Icon - MODIFIÉ POUR BARRES VERTES/ROUGE */
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -157,6 +157,8 @@
             align-items: center;
             width: 44px;
             height: 44px;
+            transition: all 0.3s ease;
+            border-radius: 8px;
         }
         
         @media (max-width: 768px) {
@@ -169,24 +171,45 @@
             }
         }
         
+        /* Styles pour les 3 barres horizontales du hamburger - MODIFIÉ */
         .hamburger-line {
             width: 24px;
-            height: 2px;
-            background-color: var(--primary-color);
-            transition: all 0.3s ease;
+            height: 3px; /* Légèrement plus épais pour mieux voir la couleur */
+            background-color: #27ae60; /* VERT par défaut */
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Animation plus fluide */
             border-radius: 2px;
+            transform-origin: center; /* Important pour l'animation de rotation */
         }
         
+        /* Animation pour transformer en "X" - MODIFIÉ */
         .mobile-menu-btn.active .hamburger-line:nth-child(1) {
             transform: rotate(45deg) translate(6px, 6px);
+            background-color: #e74c3c; /* ROUGE quand ouvert */
         }
         
         .mobile-menu-btn.active .hamburger-line:nth-child(2) {
             opacity: 0;
+            transform: translateX(-10px); /* Animation supplémentaire */
         }
         
         .mobile-menu-btn.active .hamburger-line:nth-child(3) {
             transform: rotate(-45deg) translate(6px, -6px);
+            background-color: #e74c3c; /* ROUGE quand ouvert */
+        }
+        
+        /* Effet de survol sur le bouton hamburger */
+        .mobile-menu-btn:hover .hamburger-line {
+            background-color: #2ecc71; /* Vert plus clair au survol */
+            transform: scale(1.05);
+        }
+        
+        .mobile-menu-btn.active:hover .hamburger-line {
+            background-color: #c0392b; /* Rouge plus foncé au survol quand ouvert */
+        }
+        
+        /* Effet visuel sur le bouton quand le menu est ouvert */
+        .mobile-menu-btn.active {
+            background-color: rgba(231, 76, 60, 0.1); /* Fond rouge très léger */
         }
         
         .mobile-menu {
@@ -1173,7 +1196,7 @@
                     </a>
                 </div>
                 
-                <!-- Mobile Menu Button - CORRIGÉ avec les 3 barres -->
+                <!-- Mobile Menu Button - AVEC BARRES HAMBURGER VERTES/ROUGE -->
                 <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menu mobile" id="mobile-menu-btn">
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
