@@ -1,8 +1,8 @@
-// Service Worker pour LAMITI SHOP
-const CACHE_VERSION = 'v2.0.0';
+// Service Worker LAMITI SHOP
+const CACHE_VERSION = 'v3.0.0';
 const CACHE_NAME = `lamiti-shop-${CACHE_VERSION}`;
 
-// Fichiers à pré-cacher
+// Fichiers à mettre en cache
 const PRECACHE_ASSETS = [
     '/',
     '/index.html',
@@ -10,48 +10,47 @@ const PRECACHE_ASSETS = [
     '/cart.html',
     '/track-order.html',
     '/admin.html',
-    '/config.js',
-    '/main.js',
-    '/admin.js',
-    '/styles/main.css',
+    
+    // Scripts
+    '/js/config.js',
+    '/js/main.js',
+    '/js/admin.js',
+    
+    // Images
     '/resources/product-placeholder.jpg',
     '/resources/category-placeholder.jpg',
+    
+    // CDN
     'https://cdn.tailwindcss.com',
     'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap',
-    'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap'
+    'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap',
+    'https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js',
+    'https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js'
 ];
 
-// Stratégies de cache
-const CACHE_STRATEGIES = {
-    STATIC: 'static',
-    IMAGES: 'images',
-    API: 'api',
-    FALLBACK: 'fallback'
-};
-
-// Installation du Service Worker
+// Installation
 self.addEventListener('install', (event) => {
-    console.log('Service Worker: Installation en cours...');
+    console.log('[Service Worker] Installation...');
     
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => {
-                console.log('Service Worker: Pré-cache des fichiers...');
+                console.log('[Service Worker] Mise en cache des fichiers');
                 return cache.addAll(PRECACHE_ASSETS);
             })
             .then(() => {
-                console.log('Service Worker: Installation terminée');
+                console.log('[Service Worker] Installation terminée');
                 return self.skipWaiting();
             })
             .catch((error) => {
-                console.error('Service Worker: Erreur d\'installation:', error);
+                console.error('[Service Worker] Erreur installation:', error);
             })
     );
 });
 
-// Activation du Service Worker
+// Activation
 self.addEventListener('activate', (event) => {
-    console.log('Service Worker: Activation en cours...');
+    console.log('[Service Worker] Activation...');
     
     event.waitUntil(
         caches.keys()
@@ -59,249 +58,82 @@ self.addEventListener('activate', (event) => {
                 return Promise.all(
                     cacheNames.map((cacheName) => {
                         if (cacheName !== CACHE_NAME) {
-                            console.log('Service Worker: Suppression de l\'ancien cache:', cacheName);
+                            console.log('[Service Worker] Suppression ancien cache:', cacheName);
                             return caches.delete(cacheName);
                         }
                     })
                 );
             })
             .then(() => {
-                console.log('Service Worker: Activation terminée');
+                console.log('[Service Worker] Activation terminée');
                 return self.clients.claim();
             })
     );
 });
 
-// Gestion des requêtes
+// Interception des requêtes
 self.addEventListener('fetch', (event) => {
-    const url = new URL(event.request.url);
-    
     // Ignorer les requêtes non-GET
     if (event.request.method !== 'GET') return;
     
-    // Ignorer les requêtes de développement
-    if (url.hostname === 'localhost' || url.hostname === '127.0.0.1') {
-        return;
-    }
+    const url = new URL(event.request.url);
     
-    // Déterminer la stratégie de cache
-    const strategy = determineCacheStrategy(url);
-    
-    // Appliquer la stratégie appropriée
-    switch (strategy) {
-        case CACHE_STRATEGIES.STATIC:
-            event.respondWith(cacheFirstStrategy(event));
-            break;
-            
-        case CACHE_STRATEGIES.IMAGES:
-            event.respondWith(cacheFirstWithUpdateStrategy(event));
-            break;
-            
-        case CACHE_STRATEGIES.API:
-            event.respondWith(networkFirstStrategy(event));
-            break;
-            
-        case CACHE_STRATEGIES.FALLBACK:
-            event.respondWith(fallbackStrategy(event));
-            break;
-            
-        default:
-            event.respondWith(networkFirstStrategy(event));
-    }
-});
-
-// Déterminer la stratégie de cache basée sur l'URL
-function determineCacheStrategy(url) {
-    // Fichiers statiques
-    if (url.pathname.match(/\.(?:js|css|json)$/)) {
-        return CACHE_STRATEGIES.STATIC;
-    }
-    
-    // Images
-    if (url.pathname.match(/\.(?:png|jpg|jpeg|webp|svg|gif)$/)) {
-        return CACHE_STRATEGIES.IMAGES;
-    }
-    
-    // API
-    if (url.pathname.includes('/api/')) {
-        return CACHE_STRATEGIES.API;
-    }
-    
-    // Pages HTML
-    if (url.pathname.match(/\.html$/) || url.pathname === '/') {
-        return CACHE_STRATEGIES.STATIC;
-    }
-    
-    return CACHE_STRATEGIES.FALLBACK;
-}
-
-// Stratégie: Cache First (pour les fichiers statiques)
-function cacheFirstStrategy(event) {
-    return caches.match(event.request)
-        .then((cachedResponse) => {
-            if (cachedResponse) {
-                // Mettre à jour le cache en arrière-plan
-                updateCacheInBackground(event.request);
-                return cachedResponse;
-            }
-            
-            // Récupérer du réseau
-            return fetch(event.request)
-                .then((networkResponse) => {
-                    // Ne pas mettre en cache les réponses non-OK
-                    if (!networkResponse.ok) {
-                        return networkResponse;
-                    }
-                    
-                    // Mettre en cache la réponse
-                    return caches.open(CACHE_NAME)
-                        .then((cache) => {
-                            cache.put(event.request, networkResponse.clone());
+    // Stratégie: Cache d'abord, puis réseau
+    event.respondWith(
+        caches.match(event.request)
+            .then((cachedResponse) => {
+                if (cachedResponse) {
+                    // Mettre à jour le cache en arrière-plan
+                    fetchAndCache(event.request);
+                    return cachedResponse;
+                }
+                
+                // Aller sur le réseau
+                return fetch(event.request)
+                    .then((networkResponse) => {
+                        // Ne pas mettre en cache les erreurs
+                        if (!networkResponse.ok) {
                             return networkResponse;
-                        });
-                })
-                .catch(() => {
-                    // Fallback à une page d'erreur
-                    return caches.match('/offline.html');
-                });
-        });
-}
-
-// Stratégie: Cache First avec mise à jour (pour les images)
-function cacheFirstWithUpdateStrategy(event) {
-    return caches.match(event.request)
-        .then((cachedResponse) => {
-            // Toujours essayer de récupérer depuis le réseau
-            const fetchPromise = fetch(event.request)
-                .then((networkResponse) => {
-                    if (networkResponse.ok) {
-                        // Mettre à jour le cache
-                        caches.open(CACHE_NAME)
+                        }
+                        
+                        // Mettre en cache
+                        return caches.open(CACHE_NAME)
                             .then((cache) => {
                                 cache.put(event.request, networkResponse.clone());
+                                return networkResponse;
                             });
-                    }
-                    return networkResponse;
-                })
-                .catch(() => {
-                    // Ignorer les erreurs de réseau
-                });
-            
-            // Retourner la réponse du cache si disponible
-            if (cachedResponse) {
-                return cachedResponse;
-            }
-            
-            // Sinon attendre la réponse du réseau
-            return fetchPromise;
-        });
-}
-
-// Stratégie: Network First (pour les API)
-function networkFirstStrategy(event) {
-    return fetch(event.request)
-        .then((networkResponse) => {
-            // Mettre en cache la réponse
-            if (networkResponse.ok) {
-                caches.open(CACHE_NAME)
-                    .then((cache) => {
-                        cache.put(event.request, networkResponse.clone());
-                    });
-            }
-            return networkResponse;
-        })
-        .catch(() => {
-            // Fallback au cache
-            return caches.match(event.request)
-                .then((cachedResponse) => {
-                    return cachedResponse || new Response('{"error": "Hors ligne"}', {
-                        status: 503,
-                        headers: { 'Content-Type': 'application/json' }
-                    });
-                });
-        });
-}
-
-// Stratégie: Fallback (pour tout le reste)
-function fallbackStrategy(event) {
-    return fetch(event.request)
-        .then((networkResponse) => {
-            return networkResponse;
-        })
-        .catch(() => {
-            // Fallback générique
-            return new Response(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Hors ligne - LAMITI SHOP</title>
-                    <style>
-                        body { 
-                            font-family: system-ui, sans-serif; 
-                            text-align: center; 
-                            padding: 50px; 
-                            color: #333; 
+                    })
+                    .catch(() => {
+                        // Fallback pour les pages HTML
+                        if (event.request.headers.get('accept').includes('text/html')) {
+                            return caches.match('/index.html');
                         }
-                        h1 { color: #666; }
-                    </style>
-                </head>
-                <body>
-                    <h1>Vous êtes hors ligne</h1>
-                    <p>Certaines fonctionnalités peuvent être limitées.</p>
-                    <button onclick="window.location.reload()">Réessayer</button>
-                </body>
-                </html>
-            `, {
-                status: 200,
-                headers: { 'Content-Type': 'text/html' }
-            });
-        });
-}
-
-// Mettre à jour le cache en arrière-plan
-function updateCacheInBackground(request) {
-    // Utiliser requestIdleCallback si disponible
-    if ('requestIdleCallback' in self) {
-        requestIdleCallback(() => {
-            fetch(request)
-                .then((response) => {
-                    if (response.ok) {
-                        caches.open(CACHE_NAME)
-                            .then((cache) => {
-                                cache.put(request, response);
-                            });
-                    }
-                });
-        });
-    }
-}
-
-// Gérer les messages depuis la page
-self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'SKIP_WAITING') {
-        self.skipWaiting();
-    }
-    
-    if (event.data && event.data.type === 'CLEAR_CACHE') {
-        caches.delete(CACHE_NAME);
-    }
-    
-    if (event.data && event.data.type === 'GET_CACHE_INFO') {
-        caches.open(CACHE_NAME)
-            .then((cache) => {
-                cache.keys()
-                    .then((requests) => {
-                        event.ports[0].postMessage({
-                            type: 'CACHE_INFO',
-                            size: requests.length,
-                            urls: requests.map(req => req.url)
+                        
+                        // Fallback générique
+                        return new Response('Hors ligne', {
+                            status: 503,
+                            headers: { 'Content-Type': 'text/plain' }
                         });
                     });
-            });
-    }
+            })
+    );
 });
 
-// Synchronisation en arrière-plan
+// Mettre à jour le cache en arrière-plan
+function fetchAndCache(request) {
+    return fetch(request)
+        .then((response) => {
+            if (response.ok) {
+                return caches.open(CACHE_NAME)
+                    .then((cache) => cache.put(request, response));
+            }
+        })
+        .catch(() => {
+            // Ignorer les erreurs
+        });
+}
+
+// Synchronisation des données
 self.addEventListener('sync', (event) => {
     if (event.tag === 'sync-cart') {
         event.waitUntil(syncCartData());
@@ -313,67 +145,27 @@ self.addEventListener('sync', (event) => {
 });
 
 async function syncCartData() {
-    // Synchroniser le panier
-    const cart = await getIndexedDBData('cart');
-    if (cart && cart.length > 0) {
-        // Envoyer au serveur
-        await sendToServer('/api/sync/cart', cart);
+    // Synchronisation du panier
+    const cart = JSON.parse(localStorage.getItem('lamiti-cart') || '[]');
+    if (cart.length > 0) {
+        // Simuler l'envoi au serveur
+        console.log('[Service Worker] Synchronisation panier:', cart.length, 'articles');
+        
+        // Marquer comme synchronisé
+        localStorage.setItem('lamiti-cart-synced', Date.now().toString());
     }
 }
 
 async function syncOrdersData() {
-    // Synchroniser les commandes
-    const orders = await getIndexedDBData('orders');
-    if (orders && orders.length > 0) {
-        // Envoyer au serveur
-        await sendToServer('/api/sync/orders', orders);
+    // Synchronisation des commandes
+    const orders = JSON.parse(localStorage.getItem('lamiti-orders') || '[]');
+    if (orders.length > 0) {
+        console.log('[Service Worker] Synchronisation commandes:', orders.length, 'commandes');
+        localStorage.setItem('lamiti-orders-synced', Date.now().toString());
     }
 }
 
-async function getIndexedDBData(storeName) {
-    // Implémenter l'accès à IndexedDB
-    return new Promise((resolve) => {
-        const request = indexedDB.open('lamiti-shop', 1);
-        
-        request.onsuccess = (event) => {
-            const db = event.target.result;
-            const transaction = db.transaction([storeName], 'readonly');
-            const store = transaction.objectStore(storeName);
-            const getAllRequest = store.getAll();
-            
-            getAllRequest.onsuccess = () => {
-                resolve(getAllRequest.result);
-            };
-            
-            getAllRequest.onerror = () => {
-                resolve([]);
-            };
-        };
-        
-        request.onerror = () => {
-            resolve([]);
-        };
-    });
-}
-
-async function sendToServer(url, data) {
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        
-        return response.ok;
-    } catch (error) {
-        console.error('Erreur de synchronisation:', error);
-        return false;
-    }
-}
-
-// Gérer les notifications push
+// Notifications push
 self.addEventListener('push', (event) => {
     const options = {
         body: event.data ? event.data.text() : 'Nouvelle notification LAMITI SHOP',
@@ -404,12 +196,9 @@ self.addEventListener('push', (event) => {
 });
 
 self.addEventListener('notificationclick', (event) => {
-    const notification = event.notification;
-    const action = event.action;
-
-    if (action === 'close') {
-        notification.close();
-    } else {
+    event.notification.close();
+    
+    if (event.action === 'explore') {
         // Ouvrir la boutique
         event.waitUntil(
             clients.matchAll({ type: 'window' })
@@ -424,5 +213,30 @@ self.addEventListener('notificationclick', (event) => {
                     }
                 })
         );
+    }
+});
+
+// Messages depuis la page
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
+    
+    if (event.data && event.data.type === 'CLEAR_CACHE') {
+        caches.delete(CACHE_NAME);
+    }
+    
+    if (event.data && event.data.type === 'GET_CACHE_INFO') {
+        caches.open(CACHE_NAME)
+            .then((cache) => {
+                return cache.keys();
+            })
+            .then((requests) => {
+                event.ports[0].postMessage({
+                    type: 'CACHE_INFO',
+                    size: requests.length,
+                    urls: requests.map(req => req.url)
+                });
+            });
     }
 });
