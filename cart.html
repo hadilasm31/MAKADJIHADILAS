@@ -37,7 +37,6 @@
             color: var(--text-color);
             line-height: 1.6;
             padding-top: 80px;
-            overflow-x: hidden;
         }
         
         /* Navigation Styles */
@@ -45,26 +44,20 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             z-index: 1000;
             transition: all 0.3s ease;
             border-bottom: 1px solid rgba(0,0,0,0.1);
-            padding: 0 1rem;
-        }
-        
-        .navbar.scrolled {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
         
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--primary-color);
             text-decoration: none;
             letter-spacing: -0.02em;
-            white-space: nowrap;
         }
         
         .nav-link {
@@ -73,10 +66,8 @@
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s ease;
-            padding: 0.5rem 0.75rem;
+            padding: 0.5rem 1rem;
             border-radius: 8px;
-            font-size: clamp(0.9rem, 2vw, 1rem);
-            display: block;
         }
         
         .nav-link:hover {
@@ -101,9 +92,6 @@
             color: white;
             text-decoration: none;
             transition: all 0.3s ease;
-            flex-shrink: 0;
-            min-height: 44px;
-            min-width: 44px;
         }
         
         .cart-icon:hover {
@@ -127,90 +115,11 @@
             font-weight: 600;
         }
         
-        /* Mobile Menu Button Styles */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-            min-height: 44px;
-            min-width: 44px;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
-            width: 44px;
-            height: 44px;
-            transition: all 0.3s ease;
-            border-radius: 8px;
-        }
-        
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: flex;
-            }
-            
-            .desktop-nav {
-                display: none;
-            }
-        }
-        
-        /* Styles pour les 3 barres horizontales du hamburger */
-        .hamburger-line {
-            width: 24px;
-            height: 3px;
-            background-color: #27ae60;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 2px;
-            transform-origin: center;
-        }
-        
-        /* Animation pour transformer en "X" */
-        .mobile-menu-btn.active .hamburger-line:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-            background-color: #e74c3c;
-        }
-        
-        .mobile-menu-btn.active .hamburger-line:nth-child(2) {
-            opacity: 0;
-            transform: translateX(-10px);
-        }
-        
-        .mobile-menu-btn.active .hamburger-line:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-            background-color: #e74c3c;
-        }
-        
-        /* Effet de survol sur le bouton hamburger */
-        .mobile-menu-btn:hover .hamburger-line {
-            background-color: #2ecc71;
-            transform: scale(1.05);
-        }
-        
-        .mobile-menu-btn.active:hover .hamburger-line {
-            background-color: #c0392b;
-        }
-        
-        /* Effet visuel sur le bouton quand le menu est ouvert */
-        .mobile-menu-btn.active {
-            background-color: rgba(231, 76, 60, 0.1);
-        }
-        
-        .mobile-menu {
-            transition: all 0.3s ease;
-            max-height: 0;
-            overflow: hidden;
-        }
-        
-        .mobile-menu.active {
-            max-height: 1000px;
-        }
-        
         /* Cart Styles */
         .cart-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            padding: 2rem;
         }
         
         @media (max-width: 768px) {
@@ -692,6 +601,148 @@
             margin-bottom: 0.5rem;
         }
         
+        /* Order Confirmation */
+        .order-confirmation {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .order-confirmation h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .order-details {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .order-details h3 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .order-details .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .order-details .detail-row:last-child {
+            margin-bottom: 0;
+            font-weight: 600;
+            border-top: 1px solid #ddd;
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .tracking-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 12px;
+        }
+        
+        .tracking-code {
+            font-family: monospace;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            display: inline-block;
+            margin: 0.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tracking-code:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .tracking-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 1rem;
+        }
+        
+        /* Mobile Menu Button Styles */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+            position: relative;
+        }
+        
+        .hamburger-icon {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger-line {
+            width: 100%;
+            height: 3px;
+            background-color: #10B981; /* Vert */
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Styles pour le bouton hamburger ouvert (en X rouge) */
+        .mobile-menu-btn.active .hamburger-line:nth-child(1) {
+            transform: translateY(10.5px) rotate(45deg);
+            background-color: #EF4444; /* Rouge */
+        }
+        
+        .mobile-menu-btn.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-btn.active .hamburger-line:nth-child(3) {
+            transform: translateY(-10.5px) rotate(-45deg);
+            background-color: #EF4444; /* Rouge */
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+        }
+        
+        .mobile-menu {
+            transition: all 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+        }
+        
+        .mobile-menu.active {
+            max-height: 300px;
+        }
+        
         /* Loading Animation */
         .loading {
             display: inline-block;
@@ -710,7 +761,7 @@
         /* Notifications */
         .notification {
             position: fixed;
-            top: clamp(100px, 12vh, 120px);
+            top: 100px;
             right: 20px;
             background: white;
             border-radius: 8px;
@@ -718,8 +769,7 @@
             transform: translateX(400px);
             transition: transform 0.3s ease;
             z-index: 2000;
-            max-width: min(350px, 90vw);
-            width: auto;
+            max-width: 350px;
         }
         
         .notification.show {
@@ -731,7 +781,6 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            flex-wrap: wrap;
         }
         
         .notification-success {
@@ -754,69 +803,114 @@
             color: #999;
             padding: 0;
             margin-left: auto;
-            flex-shrink: 0;
         }
         
-        /* Navbar container */
-        .nav-container {
+        /* Real-time Updates */
+        .realtime-update {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-color);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(100px);
+            transition: transform 0.3s ease;
+            z-index: 2000;
+            max-width: 350px;
+            cursor: pointer;
+        }
+        
+        .realtime-update.show {
+            transform: translateY(0);
+        }
+        
+        .realtime-content {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            height: 64px;
             gap: 1rem;
         }
         
-        /* Search container */
-        .search-container {
-            position: relative;
-            flex: 1;
-            max-width: 400px;
+        .realtime-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: white;
+            padding: 0;
+            margin-left: auto;
         }
         
-        @media (max-width: 768px) {
-            .search-container {
-                display: none;
-            }
+        /* Order Status Badges */
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
         }
         
-        /* Prevent horizontal scroll */
-        html, body {
-            max-width: 100%;
-            overflow-x: hidden;
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-shipped {
+            background: #cce5ff;
+            color: #004085;
+        }
+        
+        .status-delivered {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="max-w-7xl mx-auto w-full">
-            <div class="nav-container">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <a href="index.html" class="logo">
                     LAMITI SHOP
                 </a>
                 
                 <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center space-x-2 desktop-nav">
+                <div class="hidden md:flex items-center space-x-4 desktop-nav">
                     <a href="index.html" class="nav-link">Accueil</a>
                     <a href="products.html" class="nav-link">Produits</a>
                     <a href="index.html#categories" class="nav-link">Catégories</a>
-                    <a href="index.html#contact" class="nav-link">Contact</a>
+                    <a href="track-order.html" class="nav-link">Suivi commande</a>
                     
                     <!-- Cart Icon -->
                     <a href="cart.html" class="cart-icon">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9m-9 0h9"></path>
                         </svg>
-                        <span class="cart-badge" id="cart-badge-desktop" style="display: none;">0</span>
+                        <span class="cart-badge" style="display: none;">0</span>
                     </a>
                 </div>
                 
                 <!-- Mobile Menu Button -->
-                <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menu mobile" id="mobile-menu-btn">
-                    <span class="hamburger-line"></span>
-                    <span class="hamburger-line"></span>
-                    <span class="hamburger-line"></span>
+                <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <div class="hamburger-icon">
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </div>
                 </button>
             </div>
             
@@ -826,12 +920,14 @@
                     <a href="index.html" class="block px-3 py-2 nav-link" onclick="closeMobileMenu()">Accueil</a>
                     <a href="products.html" class="block px-3 py-2 nav-link" onclick="closeMobileMenu()">Produits</a>
                     <a href="index.html#categories" class="block px-3 py-2 nav-link" onclick="closeMobileMenu()">Catégories</a>
-                    <a href="index.html#contact" class="block px-3 py-2 nav-link" onclick="closeMobileMenu()">Contact</a>
+                    <a href="track-order.html" class="block px-3 py-2 nav-link" onclick="closeMobileMenu()">Suivi commande</a>
                     
                     <!-- Mobile Cart -->
-                    <a href="cart.html" class="block px-3 py-2 nav-link flex items-center justify-between" onclick="closeMobileMenu()">
-                        <span>Panier</span>
-                        <span class="cart-badge" id="cart-badge-mobile" style="display: none;">0</span>
+                    <a href="cart.html" class="block px-3 py-2 nav-link" onclick="closeMobileMenu()">
+                        <div class="flex items-center justify-between">
+                            <span>Panier</span>
+                            <span class="cart-badge" style="display: none;">0</span>
+                        </div>
                     </a>
                 </div>
             </div>
@@ -952,232 +1048,51 @@
         </div>
     </div>
 
-    <!-- Notification Container -->
-    <div id="notification-container"></div>
+    <!-- Real-time Update Notification -->
+    <div class="realtime-update" id="realtime-update" onclick="goToTracking()">
+        <div class="realtime-content">
+            <span>📦 Mise à jour de commande disponible</span>
+            <button class="realtime-close" onclick="hideRealtimeUpdate(event)">&times;</button>
+        </div>
+    </div>
 
     <!-- JavaScript -->
+    <script src="config.js"></script>
+    <script src="main.js"></script>
+    
     <script>
-        // Configuration de l'application
-        const shopConfig = {
-            currency: 'FCFA',
-            shippingFee: 1500,
-            freeShippingThreshold: 15000,
-            taxRate: 0.18,
-            defaultImage: 'https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80'
-        };
-
-        // Données des produits
-        const productsData = [
-            {
-                id: 'prod1',
-                name: 'Robe Élégante Soirée',
-                price: 12500,
-                originalPrice: 15000,
-                onSale: true,
-                stock: 8,
-                featured: true,
-                category: 'robes',
-                description: 'Robe élégante parfaite pour les occasions spéciales. Coupe ajustée et tissu de qualité supérieure.',
-                images: ['https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80'],
-                sizes: ['S', 'M', 'L', 'XL'],
-                colors: ['Noir', 'Rouge', 'Bleu']
-            },
-            {
-                id: 'prod2',
-                name: 'Sac à Main Cuir',
-                price: 8500,
-                onSale: false,
-                stock: 15,
-                featured: true,
-                category: 'accessoires',
-                description: 'Sac à main en cuir véritable avec compartiments multiples. Idéal pour un usage quotidien.',
-                images: ['https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80'],
-                sizes: ['Unique'],
-                colors: ['Brun', 'Noir']
-            },
-            {
-                id: 'prod3',
-                name: 'Chemise Homme Premium',
-                price: 6500,
-                onSale: false,
-                stock: 12,
-                featured: true,
-                category: 'chemises',
-                description: 'Chemise homme en coton premium. Confortable et stylée pour toutes les occasions.',
-                images: ['https://images.unsplash.com/photo-1596755094514-f87e34085b2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=988&q=80'],
-                sizes: ['M', 'L', 'XL', 'XXL'],
-                colors: ['Blanc', 'Bleu', 'Gris']
-            },
-            {
-                id: 'prod4',
-                name: 'Jupe Midi Vintage',
-                price: 9500,
-                originalPrice: 12000,
-                onSale: true,
-                stock: 6,
-                featured: false,
-                category: 'jupes',
-                description: 'Jupe midi style vintage avec motif floral. Parfaite pour le printemps.',
-                images: ['https://images.unsplash.com/photo-1540221652346-e5dd6b50d4c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80'],
-                sizes: ['S', 'M', 'L'],
-                colors: ['Fleurie', 'Unie']
-            },
-            {
-                id: 'prod5',
-                name: 'Chaussures Cuir Femme',
-                price: 14500,
-                onSale: false,
-                stock: 10,
-                featured: true,
-                category: 'chaussures',
-                description: 'Chaussures en cuir véritable pour femme. Confort et élégance garantis.',
-                images: ['https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'],
-                sizes: ['36', '37', '38', '39', '40'],
-                colors: ['Noir', 'Beige', 'Marron']
-            }
-        ];
-
-        // Gestion du panier - CORRIGÉ
-        let cart = JSON.parse(localStorage.getItem('lamiti_cart')) || [];
-
-        // Fonctions de l'application
-        const shop = {
-            // Initialisation
-            init: function() {
-                this.updateCartBadge();
-            },
-
-            // Formatage des prix
-            formatPrice: function(price) {
-                return new Intl.NumberFormat('fr-FR', {
-                    style: 'currency',
-                    currency: 'XAF'
-                }).format(price).replace('XAF', 'FCFA');
-            },
-
-            // Mise à jour du badge du panier
-            updateCartBadge: function() {
-                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-                const desktopBadge = document.getElementById('cart-badge-desktop');
-                const mobileBadge = document.getElementById('cart-badge-mobile');
-                
-                if (desktopBadge) {
-                    if (totalItems > 0) {
-                        desktopBadge.textContent = totalItems;
-                        desktopBadge.style.display = 'flex';
-                    } else {
-                        desktopBadge.style.display = 'none';
-                    }
-                }
-                
-                if (mobileBadge) {
-                    if (totalItems > 0) {
-                        mobileBadge.textContent = totalItems;
-                        mobileBadge.style.display = 'flex';
-                    } else {
-                        mobileBadge.style.display = 'none';
-                    }
-                }
-            },
-
-            // Calcul du total du panier
-            calculateCartTotal: function() {
-                return cart.reduce((total, item) => {
-                    const product = productsData.find(p => p.id === item.id);
-                    if (product) {
-                        return total + (product.price * item.quantity);
-                    }
-                    return total;
-                }, 0);
-            },
-
-            // Mise à jour de la quantité - CORRIGÉ
-            updateCartQuantity: function(itemId, newQuantity) {
-                const itemIndex = cart.findIndex(item => item.itemId === itemId);
-                if (itemIndex === -1) return false;
-
-                const product = productsData.find(p => p.id === cart[itemIndex].id);
-                if (!product) return false;
-
-                if (newQuantity <= 0) {
-                    // Supprimer l'item si la quantité est 0 ou moins
-                    cart.splice(itemIndex, 1);
-                } else if (newQuantity > product.stock) {
-                    this.showNotification('Stock insuffisant', 'error');
-                    return false;
-                } else {
-                    cart[itemIndex].quantity = newQuantity;
-                }
-
-                localStorage.setItem('lamiti_cart', JSON.stringify(cart));
-                this.updateCartBadge();
-                return true;
-            },
-
-            // Suppression du panier - CORRIGÉ
-            removeFromCart: function(itemId) {
-                const itemIndex = cart.findIndex(item => item.itemId === itemId);
-                if (itemIndex !== -1) {
-                    cart.splice(itemIndex, 1);
-                    localStorage.setItem('lamiti_cart', JSON.stringify(cart));
-                    this.updateCartBadge();
-                    this.showNotification('Produit retiré du panier', 'success');
-                    return true;
-                }
-                return false;
-            },
-
-            // Afficher les notifications
-            showNotification: function(message, type = 'info') {
-                const container = document.getElementById('notification-container');
-                const notification = document.createElement('div');
-                notification.className = `notification notification-${type}`;
-                notification.innerHTML = `
-                    <div class="notification-content">
-                        <div class="flex-1">${message}</div>
-                        <button class="notification-close" onclick="this.parentElement.parentElement.remove()">&times;</button>
-                    </div>
-                `;
-                
-                container.appendChild(notification);
-                
-                // Afficher la notification
-                setTimeout(() => notification.classList.add('show'), 10);
-                
-                // Supprimer automatiquement après 5 secondes
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        notification.classList.remove('show');
-                        setTimeout(() => notification.remove(), 300);
-                    }
-                }, 5000);
-            }
-        };
-
-        // Variables globales
         let selectedPaymentMethod = null;
         let currentOrder = null;
-
-        // Initialisation de la page panier
+        let realtimeUpdateInterval = null;
+        let lastOrderCheck = Date.now();
+        
+        // Initialize cart page
         document.addEventListener('DOMContentLoaded', function() {
-            shop.init();
             loadCartPage();
             
-            // Effet de scroll sur la navbar
-            window.addEventListener('scroll', function() {
-                const navbar = document.querySelector('.navbar');
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
+            // Listen for cart updates
+            document.addEventListener('shopDataUpdate', function() {
+                loadCartPage();
             });
+            
+            // Listen for order status updates
+            document.addEventListener('orderStatusUpdated', function(e) {
+                showRealtimeUpdate(e.detail);
+            });
+            
+            // Check for existing orders updates
+            startOrderUpdatesCheck();
         });
         
         function loadCartPage() {
+            if (!window.shop) {
+                setTimeout(loadCartPage, 100);
+                return;
+            }
+            
             const cartContent = document.getElementById('cart-content');
             
-            if (cart.length === 0) {
+            if (window.shop.cart.length === 0) {
                 cartContent.innerHTML = `
                     <div class="empty-cart">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1191,46 +1106,42 @@
                 return;
             }
             
-            const subtotal = shop.calculateCartTotal();
-            const taxes = subtotal * 0.18;
-            const total = subtotal + taxes;
-            
             cartContent.innerHTML = `
                 <div class="cart-content">
                     <div class="cart-items">
-                        <h2 class="text-xl font-semibold mb-4">Articles (${cart.reduce((sum, item) => sum + item.quantity, 0)})</h2>
-                        ${cart.map(item => {
-                            const product = productsData.find(p => p.id === item.id);
+                        <h2 class="text-xl font-semibold mb-4">Articles (${window.shop.cart.reduce((sum, item) => sum + item.quantity, 0)})</h2>
+                        ${window.shop.cart.map(item => {
+                            const product = window.shop.products.find(p => p.id === item.productId);
                             if (!product) return '';
                             
                             return `
-                                <div class="cart-item" data-item-id="${item.itemId}">
+                                <div class="cart-item" data-item-id="${item.productId}">
                                     <div class="cart-item-image">
-                                        <img src="${item.image}" alt="${item.name}" loading="lazy">
+                                        <img src="${product.images[0]}" alt="${product.name}" loading="lazy">
                                     </div>
                                     <div class="cart-item-details">
-                                        <h3 class="cart-item-name">${item.name}</h3>
+                                        <h3 class="cart-item-name">${product.name}</h3>
                                         <div class="cart-item-options">
                                             ${item.size ? `<span class="mr-3">Taille: ${item.size}</span>` : ''}
                                             ${item.color ? `<span>Couleur: ${item.color}</span>` : ''}
                                         </div>
-                                        <div class="cart-item-price">${shop.formatPrice(item.price * item.quantity)}</div>
+                                        <div class="cart-item-price">${window.shop.formatPrice(product.price)}</div>
                                     </div>
                                     <div class="cart-item-actions">
                                         <div class="quantity-controls">
-                                            <button class="quantity-btn" onclick="updateQuantity('${item.itemId}', ${item.quantity - 1})" ${item.quantity <= 1 ? 'disabled' : ''}>
+                                            <button class="quantity-btn" onclick="updateQuantity('${item.productId}', ${item.quantity - 1}, '${item.size}', '${item.color}')" ${item.quantity <= 1 ? 'disabled' : ''}>
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
                                                 </svg>
                                             </button>
-                                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" max="${product.stock}" onchange="updateQuantity('${item.itemId}', this.value)">
-                                            <button class="quantity-btn" onclick="updateQuantity('${item.itemId}', ${item.quantity + 1})" ${item.quantity >= product.stock ? 'disabled' : ''}>
+                                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" max="${product.stock}" onchange="updateQuantity('${item.productId}', this.value, '${item.size}', '${item.color}')">
+                                            <button class="quantity-btn" onclick="updateQuantity('${item.productId}', ${item.quantity + 1}, '${item.size}', '${item.color}')" ${item.quantity >= product.stock ? 'disabled' : ''}>
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                                                 </svg>
                                             </button>
                                         </div>
-                                        <button class="remove-item-btn" onclick="removeItem('${item.itemId}')">
+                                        <button class="remove-item-btn" onclick="removeItem('${item.productId}', '${item.size}', '${item.color}')">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                             </svg>
@@ -1246,19 +1157,19 @@
                         <h2 class="summary-title">Résumé de la commande</h2>
                         <div class="summary-row">
                             <span>Sous-total</span>
-                            <span>${shop.formatPrice(subtotal)}</span>
+                            <span id="subtotal">${window.shop.formatPrice(window.shop.calculateTotal())}</span>
                         </div>
                         <div class="summary-row">
                             <span>Livraison</span>
-                            <span>Gratuite</span>
+                            <span id="shipping">Gratuite</span>
                         </div>
                         <div class="summary-row">
                             <span>Taxes (18%)</span>
-                            <span>${shop.formatPrice(taxes)}</span>
+                            <span id="taxes">${window.shop.formatPrice(window.shop.calculateTotal() * 0.18)}</span>
                         </div>
                         <div class="summary-row total">
                             <span>Total</span>
-                            <span>${shop.formatPrice(total)}</span>
+                            <span id="total">${window.shop.formatPrice(window.shop.calculateTotal() * 1.18)}</span>
                         </div>
                         
                         <div class="mt-4 mb-2 text-sm text-gray-600">
@@ -1267,7 +1178,7 @@
                             <p>✓ Retours gratuits sous 30 jours</p>
                         </div>
                         
-                        <button class="checkout-btn" onclick="openCheckoutModal()" ${cart.length === 0 ? 'disabled' : ''}>
+                        <button class="checkout-btn" onclick="openCheckoutModal()" ${window.shop.cart.length === 0 ? 'disabled' : ''}>
                             Procéder au paiement
                         </button>
                         <a href="products.html" class="continue-shopping">Continuer mes achats</a>
@@ -1276,34 +1187,34 @@
             `;
         }
         
-        function updateQuantity(itemId, newQuantity) {
+        function updateQuantity(productId, newQuantity, size, color) {
             const quantity = parseInt(newQuantity);
             
-            if (isNaN(quantity) || quantity < 0) {
-                shop.showNotification('Quantité invalide', 'error');
-                return;
-            }
-            
             if (quantity <= 0) {
-                removeItem(itemId);
+                removeItem(productId, size, color);
                 return;
             }
             
-            if (shop.updateCartQuantity(itemId, quantity)) {
-                loadCartPage();
+            const product = window.shop.products.find(p => p.id === productId);
+            if (product && quantity > product.stock) {
+                window.shop.showNotification('Stock insuffisant!', 'error');
+                return;
             }
+            
+            window.shop.updateCartQuantity(productId, quantity, size, color);
+            loadCartPage();
         }
         
-        function removeItem(itemId) {
+        function removeItem(productId, size, color) {
             if (confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
-                shop.removeFromCart(itemId);
+                window.shop.removeFromCart(productId, size, color);
                 loadCartPage();
             }
         }
         
         function openCheckoutModal() {
-            if (cart.length === 0) {
-                shop.showNotification('Votre panier est vide!', 'error');
+            if (window.shop.cart.length === 0) {
+                window.shop.showNotification('Votre panier est vide!', 'error');
                 return;
             }
             
@@ -1343,7 +1254,7 @@
             event.preventDefault();
             
             if (!selectedPaymentMethod) {
-                shop.showNotification('Veuillez sélectionner un mode de paiement', 'error');
+                window.shop.showNotification('Veuillez sélectionner un mode de paiement', 'error');
                 return;
             }
             
@@ -1373,39 +1284,29 @@
             
             // Simulate order processing
             setTimeout(() => {
-                // Generate order ID
-                const orderId = 'CMD-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+                const order = window.shop.createOrder(customerInfo, shippingAddress, paymentMethod);
                 
-                // Create order object
-                const order = {
-                    id: orderId,
-                    date: new Date().toISOString(),
-                    customer: customerInfo,
-                    shippingAddress: shippingAddress,
-                    items: [...cart],
-                    subtotal: shop.calculateCartTotal(),
-                    taxes: shop.calculateCartTotal() * 0.18,
-                    total: shop.calculateCartTotal() * 1.18,
-                    paymentMethod: paymentMethod,
-                    status: 'pending',
-                    notes: notes || ''
-                };
-                
-                currentOrder = order;
-                
-                // Save order to localStorage (simulation)
-                const orders = JSON.parse(localStorage.getItem('lamiti_orders')) || [];
-                orders.push(order);
-                localStorage.setItem('lamiti_orders', JSON.stringify(orders));
-                
-                // Clear cart
-                cart = [];
-                localStorage.setItem('lamiti_cart', JSON.stringify(cart));
-                shop.updateCartBadge();
-                
-                // Close modal and show success message
-                closeCheckoutModal();
-                showOrderConfirmation(order);
+                if (order) {
+                    // Add notes to order if provided
+                    if (notes) {
+                        order.notes = notes;
+                        window.shop.saveOrders();
+                    }
+                    
+                    currentOrder = order;
+                    closeCheckoutModal();
+                    showOrderConfirmation(order);
+                    
+                    // Store customer session
+                    window.shop.currentUser = {
+                        email: customerInfo.email,
+                        firstName: customerInfo.firstName,
+                        lastName: customerInfo.lastName
+                    };
+                    localStorage.setItem('lamiti-user', JSON.stringify(window.shop.currentUser));
+                } else {
+                    window.shop.showNotification('Erreur lors de la création de la commande', 'error');
+                }
                 
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
@@ -1427,7 +1328,7 @@
                         </div>
                         <div class="detail-row">
                             <span>Total:</span>
-                            <span>${shop.formatPrice(order.total)}</span>
+                            <span>${window.shop.formatPrice(order.total)}</span>
                         </div>
                         <div class="detail-row">
                             <span>Mode de paiement:</span>
@@ -1435,77 +1336,36 @@
                         </div>
                         <div class="detail-row">
                             <span>Statut:</span>
-                            <span class="status-badge status-pending">En attente</span>
+                            <span class="status-badge status-${order.status}">
+                                ${window.shop.getStatusLabel(order.status)}
+                            </span>
                         </div>
                     </div>
                     
-                    <div class="space-y-4 mt-6">
+                    <div class="tracking-section">
+                        <h3>Suivi de commande</h3>
+                        <p>Utilisez ce code pour suivre votre commande:</p>
+                        <div class="tracking-code" onclick="copyTrackingCode('${order.trackingCode}')">
+                            ${order.trackingCode}
+                        </div>
+                        <p class="tracking-note">
+                            Livraison estimée: ${new Date(order.estimatedDelivery).toLocaleDateString('fr-FR')}
+                        </p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <button onclick="window.location.href='track-order.html?code=${order.trackingCode}'" class="shop-now-btn w-full">
+                            📦 Suivre ma commande en temps réel
+                        </button>
+                        <button onclick="printOrderDetails('${order.id}')" class="shop-now-btn w-full bg-gray-700 hover:bg-gray-800">
+                            🖨️ Imprimer les détails
+                        </button>
                         <a href="products.html" class="block text-center text-gray-600 hover:text-gray-800 transition-colors">
                             ← Retour à la boutique
                         </a>
                     </div>
                 </div>
             `;
-            
-            // Create order confirmation styles
-            const orderConfirmationStyle = `
-                .order-confirmation {
-                    background: white;
-                    border-radius: 16px;
-                    padding: 3rem 2rem;
-                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-                    text-align: center;
-                    max-width: 600px;
-                    margin: 0 auto;
-                }
-                .order-confirmation h2 {
-                    font-size: 2rem;
-                    font-weight: 700;
-                    color: var(--primary-color);
-                    margin-bottom: 1rem;
-                }
-                .order-details {
-                    background: #f8f9fa;
-                    border-radius: 12px;
-                    padding: 1.5rem;
-                    margin: 2rem 0;
-                    text-align: left;
-                }
-                .order-details h3 {
-                    font-weight: 600;
-                    margin-bottom: 1rem;
-                    color: var(--primary-color);
-                }
-                .detail-row {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-bottom: 0.5rem;
-                }
-                .detail-row:last-child {
-                    margin-bottom: 0;
-                    font-weight: 600;
-                    border-top: 1px solid #ddd;
-                    padding-top: 0.5rem;
-                    margin-top: 0.5rem;
-                }
-                .status-badge {
-                    display: inline-block;
-                    padding: 0.25rem 0.75rem;
-                    border-radius: 20px;
-                    font-size: 0.8rem;
-                    font-weight: 600;
-                    text-align: center;
-                }
-                .status-pending {
-                    background: #fff3cd;
-                    color: #856404;
-                }
-            `;
-            
-            // Add styles to head
-            const styleElement = document.createElement('style');
-            styleElement.textContent = orderConfirmationStyle;
-            document.head.appendChild(styleElement);
             
             document.getElementById('cart-content').innerHTML = confirmationHTML;
             
@@ -1520,8 +1380,329 @@
                     easing: 'easeOutExpo'
                 });
             }
+            
+            // Start checking for order updates
+            startOrderTracking(order.id);
         }
         
+        function copyTrackingCode(code) {
+            navigator.clipboard.writeText(code).then(() => {
+                window.shop.showNotification('Code copié dans le presse-papier!', 'success');
+            }).catch(err => {
+                console.error('Erreur de copie:', err);
+            });
+        }
+        
+        function printOrderDetails(orderId) {
+            const order = window.shop.orders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            const printContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Confirmation de commande - LAMITI SHOP</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+                        .header { text-align: center; margin-bottom: 30px; }
+                        .logo { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: bold; color: #1a1a1a; }
+                        .order-info { margin-bottom: 20px; }
+                        .section { margin-bottom: 25px; }
+                        .section-title { font-weight: bold; border-bottom: 2px solid #d4af37; padding-bottom: 5px; margin-bottom: 10px; }
+                        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+                        .items-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+                        .items-table th, .items-table td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+                        .total-row { font-weight: bold; border-top: 2px solid #000; }
+                        .footer { margin-top: 30px; text-align: center; font-size: 0.9rem; color: #666; }
+                        .tracking-code { font-family: monospace; font-weight: bold; color: #d4af37; }
+                        @media print {
+                            .no-print { display: none; }
+                            body { padding: 0; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="no-print" style="text-align: center; margin-bottom: 20px;">
+                        <button onclick="window.print()" style="padding: 10px 20px; background: #d4af37; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            Imprimer
+                        </button>
+                        <button onclick="window.close()" style="padding: 10px 20px; background: #666; color: white; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">
+                            Fermer
+                        </button>
+                    </div>
+                    
+                    <div class="header">
+                        <div class="logo">LAMITI SHOP</div>
+                        <h1>Confirmation de commande</h1>
+                    </div>
+                    
+                    <div class="order-info">
+                        <div class="info-grid">
+                            <div>
+                                <strong>Numéro de commande:</strong><br>
+                                ${order.id}
+                            </div>
+                            <div>
+                                <strong>Date:</strong><br>
+                                ${new Date(order.orderDate).toLocaleDateString('fr-FR')}
+                            </div>
+                            <div>
+                                <strong>Code de suivi:</strong><br>
+                                <span class="tracking-code">${order.trackingCode}</span>
+                            </div>
+                            <div>
+                                <strong>Statut:</strong><br>
+                                ${window.shop.getStatusLabel(order.status)}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">Informations client</div>
+                        <div class="info-grid">
+                            <div>
+                                <strong>Nom:</strong><br>
+                                ${order.customer.firstName} ${order.customer.lastName}
+                            </div>
+                            <div>
+                                <strong>Contact:</strong><br>
+                                ${order.customer.email}<br>
+                                ${order.customer.phone}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">Adresse de livraison</div>
+                        <p>${order.shippingAddress.address}</p>
+                        <p>${order.shippingAddress.city}, ${order.shippingAddress.zipCode}</p>
+                        <p>${order.shippingAddress.country}</p>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">Articles commandés</div>
+                        <table class="items-table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>Quantité</th>
+                                    <th>Prix unitaire</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${order.items.map(item => {
+                                    const product = window.shop.products.find(p => p.id === item.productId);
+                                    return `
+                                        <tr>
+                                            <td>${product ? product.name : 'Produit'}</td>
+                                            <td>${item.quantity}</td>
+                                            <td>${window.shop.formatPrice(product ? product.price : 0)}</td>
+                                            <td>${window.shop.formatPrice(product ? product.price * item.quantity : 0)}</td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                                <tr class="total-row">
+                                    <td colspan="3">Sous-total</td>
+                                    <td>${window.shop.formatPrice(order.total)}</td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td colspan="3">Taxes (18%)</td>
+                                    <td>${window.shop.formatPrice(order.total * 0.18)}</td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td colspan="3">Total</td>
+                                    <td>${window.shop.formatPrice(order.total * 1.18)}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">Informations de paiement</div>
+                        <p><strong>Mode de paiement:</strong> ${order.paymentMethod === 'card' ? 'Carte bancaire' : 'Paiement mobile'}</p>
+                        <p><strong>Livraison estimée:</strong> ${new Date(order.estimatedDelivery).toLocaleDateString('fr-FR')}</p>
+                    </div>
+                    
+                    <div class="footer">
+                        <p>Merci pour votre commande !</p>
+                        <p>Suivez votre commande en ligne: https://lamiti-shop.com/track-order.html?code=${order.trackingCode}</p>
+                        <p>Contact: hadilasmakadji31@gmail.com | +241 77 95 03 88</p>
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(printContent);
+            printWindow.document.close();
+            printWindow.focus();
+            setTimeout(() => {
+                printWindow.print();
+            }, 500);
+        }
+        
+        function trackOrder(trackingCode) {
+            if (window.shop) {
+                const order = window.shop.getOrderByTrackingCode(trackingCode);
+                if (order) {
+                    let statusMessage = '';
+                    let statusEmoji = '';
+                    
+                    switch (order.status) {
+                        case 'pending':
+                            statusMessage = 'Votre commande est en cours de traitement.';
+                            statusEmoji = '⏳';
+                            break;
+                        case 'confirmed':
+                            statusMessage = 'Votre commande a été confirmée et est en préparation.';
+                            statusEmoji = '✅';
+                            break;
+                        case 'shipped':
+                            statusMessage = 'Votre commande a été expédiée et est en cours de livraison.';
+                            statusEmoji = '🚚';
+                            break;
+                        case 'delivered':
+                            statusMessage = 'Votre commande a été livrée avec succès!';
+                            statusEmoji = '🎉';
+                            break;
+                        case 'cancelled':
+                            statusMessage = 'Votre commande a été annulée.';
+                            statusEmoji = '❌';
+                            break;
+                        default:
+                            statusMessage = 'Statut de commande inconnu.';
+                            statusEmoji = '❓';
+                    }
+                    
+                    window.shop.showNotification(`${statusEmoji} ${statusMessage}`, 'info');
+                    
+                    // Redirect to tracking page
+                    window.location.href = `track-order.html?code=${trackingCode}`;
+                } else {
+                    window.shop.showNotification('Commande introuvable.', 'error');
+                }
+            }
+        }
+        
+        function startOrderTracking(orderId) {
+            // Check for updates every 30 seconds
+            realtimeUpdateInterval = setInterval(() => {
+                checkOrderUpdate(orderId);
+            }, 30000);
+        }
+        
+        function checkOrderUpdate(orderId) {
+            if (!window.shop) return;
+            
+            const order = window.shop.orders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            // Check for new status updates
+            if (order.updates && order.updates.length > 0) {
+                const lastSeenUpdate = localStorage.getItem(`lamiti-last-update-${orderId}`) || 0;
+                const newUpdates = order.updates.filter(update => 
+                    new Date(update.timestamp).getTime() > lastSeenUpdate
+                );
+                
+                if (newUpdates.length > 0) {
+                    // Show real-time update notification
+                    const latestUpdate = newUpdates[newUpdates.length - 1];
+                    showRealtimeUpdate({
+                        orderId: orderId,
+                        newStatus: latestUpdate.newStatus,
+                        message: latestUpdate.message
+                    });
+                    
+                    // Update last seen
+                    localStorage.setItem(`lamiti-last-update-${orderId}`, 
+                        new Date(latestUpdate.timestamp).getTime());
+                }
+            }
+        }
+        
+        function startOrderUpdatesCheck() {
+            // Check for all customer orders updates every minute
+            setInterval(() => {
+                checkAllOrderUpdates();
+            }, 60000);
+            
+            // Initial check
+            setTimeout(() => {
+                checkAllOrderUpdates();
+            }, 5000);
+        }
+        
+        function checkAllOrderUpdates() {
+            if (!window.shop) return;
+            
+            const customerEmail = window.shop.currentUser?.email;
+            if (!customerEmail) return;
+            
+            const customerOrders = window.shop.getCustomerOrders(customerEmail);
+            
+            customerOrders.forEach(order => {
+                if (order.updates && order.updates.length > 0) {
+                    const lastSeenUpdate = localStorage.getItem(`lamiti-last-update-${order.id}`) || 0;
+                    const newUpdates = order.updates.filter(update => 
+                        new Date(update.timestamp).getTime() > lastSeenUpdate
+                    );
+                    
+                    if (newUpdates.length > 0) {
+                        const latestUpdate = newUpdates[newUpdates.length - 1];
+                        showRealtimeUpdate({
+                            orderId: order.id,
+                            newStatus: latestUpdate.newStatus,
+                            message: latestUpdate.message
+                        });
+                    }
+                }
+            });
+        }
+        
+        function showRealtimeUpdate(update) {
+            const updateElement = document.getElementById('realtime-update');
+            if (updateElement) {
+                updateElement.querySelector('span').textContent = `📦 ${update.message}`;
+                updateElement.classList.add('show');
+                
+                // Auto-hide after 10 seconds
+                setTimeout(() => {
+                    hideRealtimeUpdate();
+                }, 10000);
+            }
+        }
+        
+        function hideRealtimeUpdate(event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            const updateElement = document.getElementById('realtime-update');
+            if (updateElement) {
+                updateElement.classList.remove('show');
+            }
+        }
+        
+        function goToTracking() {
+            const updateElement = document.getElementById('realtime-update');
+            const text = updateElement.querySelector('span').textContent;
+            
+            // Extract order ID from message
+            const orderIdMatch = text.match(/commande\s+([A-Z0-9-]+)/i);
+            if (orderIdMatch && orderIdMatch[1]) {
+                const orderId = orderIdMatch[1];
+                const order = window.shop.orders.find(o => o.id === orderId);
+                if (order) {
+                    window.location.href = `track-order.html?code=${order.trackingCode}`;
+                }
+            } else {
+                window.location.href = 'track-order.html';
+            }
+            
+            hideRealtimeUpdate();
+        }
+        
+        // Fonction pour basculer le menu mobile
         function toggleMobileMenu() {
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -1529,23 +1710,24 @@
             mobileMenu.classList.toggle('active');
             mobileMenuBtn.classList.toggle('active');
             
-            // Empêcher le défilement du corps lorsque le menu est ouvert
+            // Empêcher le défilement du body lorsque le menu est ouvert
             if (mobileMenu.classList.contains('active')) {
                 document.body.style.overflow = 'hidden';
             } else {
-                document.body.style.overflow = '';
+                document.body.style.overflow = 'auto';
             }
         }
-
+        
+        // Fonction pour fermer le menu mobile
         function closeMobileMenu() {
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             
             mobileMenu.classList.remove('active');
             mobileMenuBtn.classList.remove('active');
-            document.body.style.overflow = '';
+            document.body.style.overflow = 'auto';
         }
-
+        
         // Fermer le menu mobile en cliquant à l'extérieur
         document.addEventListener('click', function(e) {
             const mobileMenu = document.getElementById('mobile-menu');
@@ -1563,12 +1745,23 @@
                 closeCheckoutModal();
             }
         });
-
+        
         // Fermer le menu mobile avec la touche Escape
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeMobileMenu();
                 closeCheckoutModal();
+            }
+        });
+        
+        // Auto-save cart when page unloads
+        window.addEventListener('beforeunload', function() {
+            if (window.shop) {
+                window.shop.saveCart();
+            }
+            
+            if (realtimeUpdateInterval) {
+                clearInterval(realtimeUpdateInterval);
             }
         });
     </script>
